@@ -35,6 +35,23 @@ export const metadata: Metadata = {
     locale: 'ru_RU',
     url: 'https://compress-photo.online/ru',
   },
+  twitter: {
+    card: 'summary_large_image',
+    title: 'Сжать фото онлайн — Бесплатный компрессор изображений в браузере',
+    description:
+      'Мгновенное сжатие и конвертация фото JPEG, PNG, WebP, AVIF прямо в браузере. Без потери качества, 100% конфиденциально.',
+  },
+  robots: {
+    index: true,
+    follow: true,
+    googleBot: {
+      index: true,
+      follow: true,
+      'max-video-preview': -1,
+      'max-image-preview': 'large',
+      'max-snippet': -1,
+    },
+  },
 };
 
 export default function RootLayout({

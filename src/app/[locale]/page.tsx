@@ -5,7 +5,7 @@ import { notFound } from 'next/navigation';
 import { Aperture, ShieldCheck, Zap, Layers, FileArchive, CheckCircle2, ArrowRight, Cpu, Eye, Lock } from 'lucide-react';
 import { PhotoCompressor } from '@/components/compressor/PhotoCompressor';
 import { FaqAccordion } from '@/components/seo/FaqAccordion';
-import { WebAppJsonLd, FaqJsonLd } from '@/components/seo/JsonLd';
+import { WebAppJsonLd, FaqJsonLd, WebSiteJsonLd } from '@/components/seo/JsonLd';
 import { translations, Locale } from '@/lib/i18n/translations';
 import { TOOLS_DATA } from '@/lib/tools-data';
 import { DOCS_DATA } from '@/lib/docs-data';
@@ -97,6 +97,7 @@ export default function HomePage({ params }: PageProps) {
   return (
     <div className="space-y-20">
       {/* Schemas */}
+      <WebSiteJsonLd />
       <WebAppJsonLd
         name={t.siteName}
         description={t.hero.subtitle}

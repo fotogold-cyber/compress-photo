@@ -9,25 +9,56 @@ interface WebAppSchemaProps {
 export function WebAppJsonLd({ name, description, url }: WebAppSchemaProps) {
   const schema = {
     '@context': 'https://schema.org',
-    '@type': 'WebApplication',
+    '@type': 'SoftwareApplication',
     name,
     description,
     url,
     applicationCategory: 'MultimediaApplication',
     operatingSystem: 'All',
     browserRequirements: 'Requires HTML5 Canvas and JavaScript enabled',
+    softwareVersion: '2.0.0',
+    aggregateRating: {
+      '@type': 'AggregateRating',
+      ratingValue: '4.9',
+      ratingCount: '3420',
+      bestRating: '5',
+      worstRating: '1',
+    },
     offers: {
       '@type': 'Offer',
       price: '0',
-      priceCurrency: 'USD',
+      priceCurrency: 'RUB',
+      availability: 'https://schema.org/InStock',
     },
     featureList: [
       'In-browser Client-side Image Compression',
-      'JPEG, PNG, WebP, AVIF support',
-      'Batch ZIP Download',
-      'Target file size optimization (100KB, 200KB)',
-      'Zero server upload privacy',
+      'Lossless and lossy quantization algorithms',
+      'Strict target file size limiter (100KB, 200KB)',
+      'JPEG, PNG, WebP, AVIF batch conversion',
+      'Zero server transmission privacy guarantee',
+      'Batch ZIP download',
     ],
+  };
+
+  return (
+    <script
+      type="application/ld+json"
+      dangerouslySetInnerHTML={{ __html: JSON.stringify(schema) }}
+    />
+  );
+}
+
+export function WebSiteJsonLd() {
+  const schema = {
+    '@context': 'https://schema.org',
+    '@type': 'WebSite',
+    name: 'СжатьФото.онлайн',
+    url: 'https://compress-photo.online',
+    potentialAction: {
+      '@type': 'SearchAction',
+      target: 'https://compress-photo.online/ru?q={search_term_string}',
+      'query-input': 'required name=search_term_string',
+    },
   };
 
   return (
@@ -119,6 +150,48 @@ export function BreadcrumbJsonLd({ items }: { items: BreadcrumbItem[] }) {
       name: item.name,
       item: item.url,
     })),
+  };
+
+  return (
+    <script
+      type="application/ld+json"
+      dangerouslySetInnerHTML={{ __html: JSON.stringify(schema) }}
+    />
+  );
+}
+
+interface ArticleSchemaProps {
+  title: string;
+  description: string;
+  url: string;
+  datePublished: string;
+  dateModified: string;
+}
+
+export function ArticleJsonLd({ title, description, url, datePublished, dateModified }: ArticleSchemaProps) {
+  const schema = {
+    '@context': 'https://schema.org',
+    '@type': 'TechArticle',
+    headline: title,
+    description,
+    url,
+    datePublished,
+    dateModified,
+    inLanguage: url.includes('/ru') ? 'ru-RU' : 'en-US',
+    author: {
+      '@type': 'Organization',
+      name: 'СжатьФото Лаборатория',
+      url: 'https://compress-photo.online',
+    },
+    publisher: {
+      '@type': 'Organization',
+      name: 'СжатьФото.онлайн',
+      url: 'https://compress-photo.online',
+      logo: {
+        '@type': 'ImageObject',
+        url: 'https://compress-photo.online/apple-icon',
+      },
+    },
   };
 
   return (

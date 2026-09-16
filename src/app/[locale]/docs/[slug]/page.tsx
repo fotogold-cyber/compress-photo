@@ -6,7 +6,7 @@ import { Clock, Calendar, BookOpen, Sparkles, ArrowRight, ShieldCheck, Camera } 
 import { Breadcrumbs } from '@/components/layout/Breadcrumbs';
 import { FaqAccordion } from '@/components/seo/FaqAccordion';
 import { RelatedLinks } from '@/components/seo/RelatedLinks';
-import { FaqJsonLd } from '@/components/seo/JsonLd';
+import { FaqJsonLd, ArticleJsonLd } from '@/components/seo/JsonLd';
 import { DOCS_DATA, getDocArticleBySlug } from '@/lib/docs-data';
 import { Locale } from '@/lib/i18n/translations';
 
@@ -199,6 +199,13 @@ export default function DocArticlePage({ params }: DocPageProps) {
   return (
     <article className="max-w-4xl mx-auto space-y-10">
       {/* Schemas */}
+      <ArticleJsonLd
+        title={doc.title[validLocale]}
+        description={doc.metaDescription[validLocale]}
+        url={`https://compress-photo.online/${validLocale}/docs/${doc.slug}`}
+        datePublished={doc.datePublished}
+        dateModified={doc.dateModified}
+      />
       <FaqJsonLd items={doc.faq[validLocale]} />
 
       {/* Breadcrumbs */}
