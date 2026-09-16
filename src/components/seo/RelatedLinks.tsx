@@ -21,14 +21,14 @@ export function RelatedLinks({ locale, relatedToolSlugs = [], relatedDocSlugs = 
   if (tools.length === 0 && docs.length === 0) return null;
 
   return (
-    <section className="my-16 max-w-5xl mx-auto w-full border-t border-slate-200 dark:border-slate-800 pt-12">
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-10">
+    <section className="my-16 max-w-5xl mx-auto w-full border-t border-[#212734] pt-10">
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
         {/* Related Tools */}
         {tools.length > 0 && (
           <div className="space-y-4">
             <div className="flex items-center gap-2">
-              <Sparkles className="w-4 h-4 text-blue-600" />
-              <h3 className="font-bold text-lg text-slate-900 dark:text-white">
+              <span className="text-[#ff5500] font-mono text-sm">◈</span>
+              <h3 className="font-extrabold text-sm sm:text-base text-white uppercase font-sans tracking-tight">
                 {locale === 'ru' ? 'Рекомендуемые инструменты' : 'Related Tools'}
               </h3>
             </div>
@@ -38,17 +38,17 @@ export function RelatedLinks({ locale, relatedToolSlugs = [], relatedDocSlugs = 
                 <Link
                   key={tool.slug[locale]}
                   href={`/${locale}/${tool.slug[locale]}`}
-                  className="p-3.5 rounded-xl border border-slate-200 dark:border-slate-800 bg-white/60 dark:bg-slate-900/50 hover:border-blue-500 hover:shadow-sm transition-all flex items-center justify-between group"
+                  className="p-3.5 rounded-xl border border-[#212734] bg-[#11141c] hover:border-[#ff5500] transition-all flex items-center justify-between group shadow-sm"
                 >
                   <div>
-                    <h4 className="font-semibold text-sm text-slate-900 dark:text-slate-100 group-hover:text-blue-600">
+                    <h4 className="font-bold text-xs sm:text-sm text-slate-200 group-hover:text-[#ff5500] font-sans">
                       {tool.title[locale]}
                     </h4>
-                    <p className="text-xs text-slate-500 line-clamp-1 mt-0.5">
+                    <p className="text-[11px] text-slate-400 line-clamp-1 mt-0.5 font-mono">
                       {tool.subtitle[locale]}
                     </p>
                   </div>
-                  <ArrowRight className="w-4 h-4 text-slate-400 group-hover:text-blue-600 group-hover:translate-x-1 transition-all shrink-0 ml-2" />
+                  <ArrowRight className="w-3.5 h-3.5 text-slate-500 group-hover:text-[#ff5500] group-hover:translate-x-1 transition-all shrink-0 ml-2" />
                 </Link>
               ))}
             </div>
@@ -59,9 +59,9 @@ export function RelatedLinks({ locale, relatedToolSlugs = [], relatedDocSlugs = 
         {docs.length > 0 && (
           <div className="space-y-4">
             <div className="flex items-center gap-2">
-              <BookOpen className="w-4 h-4 text-indigo-600" />
-              <h3 className="font-bold text-lg text-slate-900 dark:text-white">
-                {locale === 'ru' ? 'Полезные руководства' : 'Helpful Guides'}
+              <span className="text-[#ff5500] font-mono text-sm">◈</span>
+              <h3 className="font-extrabold text-sm sm:text-base text-white uppercase font-sans tracking-tight">
+                {locale === 'ru' ? 'Связанные руководства' : 'Related Manuals'}
               </h3>
             </div>
 
@@ -70,17 +70,17 @@ export function RelatedLinks({ locale, relatedToolSlugs = [], relatedDocSlugs = 
                 <Link
                   key={doc.slug}
                   href={`/${locale}/docs/${doc.slug}`}
-                  className="p-3.5 rounded-xl border border-slate-200 dark:border-slate-800 bg-white/60 dark:bg-slate-900/50 hover:border-indigo-500 hover:shadow-sm transition-all flex items-center justify-between group"
+                  className="p-3.5 rounded-xl border border-[#212734] bg-[#11141c] hover:border-[#ff5500] transition-all flex items-center justify-between group shadow-sm"
                 >
                   <div>
-                    <span className="text-[10px] font-bold uppercase tracking-wider text-indigo-600 dark:text-indigo-400">
+                    <span className="text-[9px] font-mono font-bold uppercase tracking-wider text-[#ff5500]">
                       {doc.category[locale]} • {doc.readTime}
                     </span>
-                    <h4 className="font-semibold text-sm text-slate-900 dark:text-slate-100 group-hover:text-indigo-600 line-clamp-1 mt-0.5">
+                    <h4 className="font-bold text-xs sm:text-sm text-slate-200 group-hover:text-[#ff5500] line-clamp-1 mt-0.5 font-sans">
                       {doc.title[locale]}
                     </h4>
                   </div>
-                  <ArrowRight className="w-4 h-4 text-slate-400 group-hover:text-indigo-600 group-hover:translate-x-1 transition-all shrink-0 ml-2" />
+                  <ArrowRight className="w-3.5 h-3.5 text-slate-500 group-hover:text-[#ff5500] group-hover:translate-x-1 transition-all shrink-0 ml-2" />
                 </Link>
               ))}
             </div>

@@ -2,7 +2,7 @@
 
 import React, { useState, useEffect, useCallback } from 'react';
 import JSZip from 'jszip';
-import { Download, Trash2, ArrowDownCircle, CheckCheck, RefreshCw, Zap } from 'lucide-react';
+import { Download, Trash2, ArrowDownCircle, CheckCheck, RefreshCw, Zap, Layers, Sparkles } from 'lucide-react';
 import { CompressionSettings, ImageItem } from '@/lib/types';
 import { compressImage, formatBytes, getOutputFilename, loadImage } from '@/lib/compressor-engine';
 import { Dropzone } from './Dropzone';
@@ -21,7 +21,7 @@ export function PhotoCompressor({ locale, initialSettings }: PhotoCompressorProp
 
   const [settings, setSettings] = useState<CompressionSettings>({
     format: initialSettings?.format || 'original',
-    quality: initialSettings?.quality ?? 82,
+    quality: initialSettings?.quality ?? 80,
     maxWidth: initialSettings?.maxWidth,
     maxHeight: initialSettings?.maxHeight,
     targetMaxKb: initialSettings?.targetMaxKb,
@@ -106,7 +106,6 @@ export function PhotoCompressor({ locale, initialSettings }: PhotoCompressorProp
 
     if (images.length === 0) return;
 
-    // Mark as processing
     setImages((prev) => prev.map((img) => ({ ...img, status: 'processing' })));
 
     for (const item of images) {
@@ -168,7 +167,7 @@ export function PhotoCompressor({ locale, initialSettings }: PhotoCompressorProp
     }
   };
 
-  // Calculate totals
+  // Totals
   const totalOriginalBytes = images.reduce((acc, img) => acc + img.originalSize, 0);
   const totalCompressedBytes = images.reduce(
     (acc, img) => acc + (img.compressedSize || img.originalSize),
@@ -182,7 +181,7 @@ export function PhotoCompressor({ locale, initialSettings }: PhotoCompressorProp
   const hasCompletedItems = images.some((img) => img.status === 'done' && img.compressedBlob);
 
   return (
-    <div className="w-full space-y-8">
+    <div className="w-full space-y-7">
       {/* Dropzone */}
       <Dropzone locale={locale} onFilesSelected={handleFilesSelected} />
 
@@ -193,28 +192,34 @@ export function PhotoCompressor({ locale, initialSettings }: PhotoCompressorProp
         onChange={handleSettingsChange}
       />
 
-      {/* Results & Batch Controls */}
+      {/* Results & Telemetry Console */}
       {hasItems && (
         <div className="space-y-4">
-          {/* Summary Banner */}
-          <div className="p-4 sm:p-5 rounded-2xl bg-gradient-to-r from-blue-50 to-indigo-50 dark:from-slate-900 dark:to-slate-850 border border-blue-100 dark:border-slate-800 flex flex-col md:flex-row items-center justify-between gap-4">
-            <div className="flex flex-wrap items-center gap-4 sm:gap-6 text-sm">
+          {/* Telemetry bar */}
+          <div className="p-4 sm:p-5 rounded-xl bg-[#11141c] border border-[#232938] flex flex-col md:flex-row items-center justify-between gap-4 shadow-xl">
+            <div className="flex flex-wrap items-center gap-4 sm:gap-8 text-xs font-mono">
               <div>
-                <span className="text-slate-500 block text-xs">{t.results.originalTotal}</span>
-                <span className="font-bold text-slate-800 dark:text-white">
+                <span className="text-slate-400 block text-[10px] uppercase">
+                  {t.results.originalTotal}
+                </span>
+                <span className="font-bold text-white text-sm">
                   {formatBytes(totalOriginalBytes, 1, locale)}
                 </span>
               </div>
-              <div className="hidden sm:block text-slate-300 dark:text-slate-700">→</div>
+              <div className="hidden sm:block text-slate-400">→</div>
               <div>
-                <span className="text-slate-500 block text-xs">{t.results.compressedTotal}</span>
-                <span className="font-bold text-blue-600 dark:text-blue-400">
+                <span className="text-slate-400 block text-[10px] uppercase">
+                  {t.results.compressedTotal}
+                </span>
+                <span className="font-bold text-[#ff5500] text-sm">
                   {formatBytes(totalCompressedBytes, 1, locale)}
                 </span>
               </div>
-              <div className="border-l border-slate-200 dark:border-slate-700 pl-4 sm:pl-6">
-                <span className="text-slate-500 block text-xs">{t.results.totalSaved}</span>
-                <span className="font-extrabold text-emerald-600 dark:text-emerald-400 flex items-center gap-1">
+              <div className="border-l border-[#242b3b] pl-4 sm:pl-6">
+                <span className="text-slate-400 block text-[10px] uppercase">
+                  {t.results.totalSaved}
+                </span>
+                <span className="font-extrabold text-emerald-400 text-sm flex items-center gap-1">
                   {formatBytes(totalSavedBytes, 1, locale)} (-{overallSavingsPercent}%)
                 </span>
               </div>
@@ -224,7 +229,7 @@ export function PhotoCompressor({ locale, initialSettings }: PhotoCompressorProp
               <button
                 type="button"
                 onClick={handleClearAll}
-                className="px-3.5 py-2 text-xs font-medium text-slate-600 dark:text-slate-400 hover:text-rose-500 hover:bg-slate-100 dark:hover:bg-slate-800 rounded-xl transition-all"
+                className="px-3.5 py-2 text-xs font-mono text-slate-400 hover:text-rose-400 hover:bg-rose-950/20 rounded-lg transition-all"
               >
                 {t.results.clearAll}
               </button>
@@ -233,10 +238,10 @@ export function PhotoCompressor({ locale, initialSettings }: PhotoCompressorProp
                 type="button"
                 onClick={handleDownloadZip}
                 disabled={!hasCompletedItems || isZipping}
-                className="flex items-center justify-center gap-2 px-5 py-2.5 rounded-xl bg-emerald-600 hover:bg-emerald-700 disabled:bg-slate-300 dark:disabled:bg-slate-800 text-white font-semibold text-sm shadow-md shadow-emerald-600/20 transition-all"
+                className="flex items-center justify-center gap-2 px-5 py-2.5 rounded-lg bg-[#ff5500] hover:bg-[#e04b00] disabled:bg-slate-800 disabled:text-slate-500 text-white font-mono font-bold text-xs uppercase tracking-wider shadow-lg shadow-[#ff5500]/25 transition-all border border-[#ff7733]"
               >
                 <Download className="w-4 h-4" />
-                <span>{isZipping ? 'Создание ZIP...' : t.results.downloadAllZip}</span>
+                <span>{isZipping ? 'PACKING ZIP...' : t.results.downloadAllZip}</span>
               </button>
             </div>
           </div>

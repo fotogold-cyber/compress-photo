@@ -22,10 +22,10 @@ export function FaqAccordion({ items, title }: FaqAccordionProps) {
     <section className="my-16 max-w-4xl mx-auto w-full">
       {title && (
         <div className="flex items-center gap-2 mb-8 justify-center">
-          <div className="w-8 h-8 rounded-lg bg-blue-50 dark:bg-blue-950/60 text-blue-600 flex items-center justify-center">
+          <div className="w-8 h-8 rounded bg-[#181d28] border border-[#2a3447] text-[#ff5500] flex items-center justify-center">
             <HelpCircle className="w-4 h-4" />
           </div>
-          <h2 className="text-2xl sm:text-3xl font-extrabold text-slate-900 dark:text-white tracking-tight">
+          <h2 className="text-xl sm:text-2xl font-extrabold text-white tracking-tight uppercase font-sans">
             {title}
           </h2>
         </div>
@@ -38,23 +38,23 @@ export function FaqAccordion({ items, title }: FaqAccordionProps) {
           return (
             <div
               key={idx}
-              className="border border-slate-200 dark:border-slate-800 rounded-xl overflow-hidden bg-white/70 dark:bg-slate-900/60 transition-all"
+              className="border border-[#212734] rounded-xl overflow-hidden bg-[#10131a] transition-all"
             >
               <button
                 type="button"
                 onClick={() => setOpenIndex(isOpen ? null : idx)}
-                className="w-full text-left px-5 py-4 flex items-center justify-between gap-4 font-semibold text-slate-900 dark:text-slate-100 hover:text-blue-600 dark:hover:text-blue-400 transition-colors"
+                className="w-full text-left px-5 py-4 flex items-center justify-between gap-4 font-semibold text-slate-200 hover:text-[#ff5500] transition-colors"
               >
-                <span className="text-base sm:text-lg">{item.q}</span>
+                <span className="text-sm sm:text-base font-sans">{item.q}</span>
                 <ChevronDown
-                  className={`w-5 h-5 text-slate-400 shrink-0 transition-transform duration-200 ${
-                    isOpen ? 'rotate-180 text-blue-600' : ''
+                  className={`w-4 h-4 text-slate-500 shrink-0 transition-transform duration-200 ${
+                    isOpen ? 'rotate-180 text-[#ff5500]' : ''
                   }`}
                 />
               </button>
 
               {isOpen && (
-                <div className="px-5 pb-5 pt-1 text-slate-600 dark:text-slate-400 text-sm sm:text-base leading-relaxed border-t border-slate-100 dark:border-slate-800/60">
+                <div className="px-5 pb-5 pt-1 text-slate-400 text-xs sm:text-sm leading-relaxed border-t border-[#181d26] font-sans">
                   {item.a}
                 </div>
               )}

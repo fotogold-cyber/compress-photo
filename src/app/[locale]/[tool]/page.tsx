@@ -1,7 +1,7 @@
 import React from 'react';
 import type { Metadata } from 'next';
 import { notFound } from 'next/navigation';
-import { Sparkles, CheckCircle2, HelpCircle, ListOrdered, ShieldCheck } from 'lucide-react';
+import { Sparkles, CheckCircle2, HelpCircle, ListOrdered, ShieldCheck, Camera } from 'lucide-react';
 import { PhotoCompressor } from '@/components/compressor/PhotoCompressor';
 import { Breadcrumbs } from '@/components/layout/Breadcrumbs';
 import { FaqAccordion } from '@/components/seo/FaqAccordion';
@@ -95,22 +95,22 @@ export default function ToolPage({ params }: ToolPageProps) {
       <Breadcrumbs items={breadcrumbs} />
 
       {/* Hero Header */}
-      <section className="text-center max-w-4xl mx-auto space-y-4">
-        <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full text-xs font-semibold bg-blue-50 dark:bg-blue-950/60 text-blue-700 dark:text-blue-300 border border-blue-200/60 dark:border-blue-800/60 shadow-sm">
-          <Sparkles className="w-3.5 h-3.5 text-blue-500" />
-          <span>{validLocale === 'ru' ? 'Специализированный алгоритм' : 'Specialized Engine'}</span>
+      <section className="text-center max-w-4xl mx-auto space-y-4 pt-2 sm:pt-6">
+        <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full text-xs font-mono font-semibold bg-[#161a24] text-[#ff5500] border border-[#283142] shadow-sm">
+          <span>●</span>
+          <span>CALIBRATED WORKFLOW // {tool.defaultSettings.format.replace('image/', '').toUpperCase()}</span>
         </div>
 
-        <h1 className="text-3xl sm:text-5xl font-extrabold text-slate-900 dark:text-white tracking-tight leading-[1.15]">
+        <h1 className="text-3xl sm:text-5xl font-black text-white tracking-tight leading-[1.12] font-sans uppercase">
           {tool.h1[validLocale]}
         </h1>
 
-        <p className="text-base sm:text-lg text-slate-600 dark:text-slate-400 max-w-2xl mx-auto leading-relaxed">
+        <p className="text-sm sm:text-base text-slate-400 max-w-2xl mx-auto leading-relaxed font-sans">
           {tool.subtitle[validLocale]}
         </p>
       </section>
 
-      {/* Interactive Compressor preconfigured for this tool */}
+      {/* Interactive Compressor */}
       <section className="max-w-4xl mx-auto">
         <PhotoCompressor
           locale={validLocale}
@@ -118,28 +118,28 @@ export default function ToolPage({ params }: ToolPageProps) {
         />
       </section>
 
-      {/* How To Steps Section (SEO Rich Snippet target) */}
-      <section className="max-w-4xl mx-auto pt-8 border-t border-slate-200 dark:border-slate-800">
-        <div className="flex items-center gap-2.5 mb-6 justify-center">
-          <ListOrdered className="w-5 h-5 text-blue-600" />
-          <h2 className="text-2xl font-bold text-slate-900 dark:text-white tracking-tight">
+      {/* How To Steps */}
+      <section className="max-w-4xl mx-auto pt-8 border-t border-[#212734]">
+        <div className="flex items-center gap-2 mb-6 justify-center">
+          <ListOrdered className="w-5 h-5 text-[#ff5500]" />
+          <h2 className="text-xl sm:text-2xl font-extrabold text-white tracking-tight uppercase font-sans">
             {validLocale === 'ru' ? 'Как это работает (3 простых шага)' : 'How It Works (3 Easy Steps)'}
           </h2>
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-5">
           {tool.howToSteps[validLocale].map((step, idx) => (
             <div
               key={idx}
-              className="p-5 rounded-xl border border-slate-200 dark:border-slate-800 bg-white/70 dark:bg-slate-900/60 shadow-sm relative"
+              className="p-5 rounded-xl border border-[#212734] bg-[#11141c] shadow-lg relative"
             >
-              <div className="w-7 h-7 rounded-full bg-blue-600 text-white font-bold text-xs flex items-center justify-center mb-3">
-                {idx + 1}
+              <div className="w-7 h-7 rounded bg-[#ff5500] text-white font-mono font-bold text-xs flex items-center justify-center mb-3">
+                0{idx + 1}
               </div>
-              <h3 className="font-bold text-sm text-slate-900 dark:text-slate-100 mb-1.5">
+              <h3 className="font-bold text-sm text-white mb-1.5 font-sans">
                 {step.step}
               </h3>
-              <p className="text-xs text-slate-500 dark:text-slate-400 leading-relaxed">
+              <p className="text-xs text-slate-400 leading-relaxed font-sans">
                 {step.text}
               </p>
             </div>
@@ -148,24 +148,24 @@ export default function ToolPage({ params }: ToolPageProps) {
       </section>
 
       {/* Tool Features */}
-      <section className="max-w-4xl mx-auto pt-8">
-        <h2 className="text-2xl font-bold text-slate-900 dark:text-white text-center mb-8">
+      <section className="max-w-4xl mx-auto pt-6">
+        <h2 className="text-xl sm:text-2xl font-extrabold text-white text-center mb-6 uppercase font-sans">
           {validLocale === 'ru' ? 'Преимущества обработки' : 'Key Advantages'}
         </h2>
 
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-5">
           {tool.features[validLocale].map((f, idx) => (
             <div
               key={idx}
-              className="p-5 rounded-xl border border-slate-200 dark:border-slate-800 bg-white/60 dark:bg-slate-900/50"
+              className="p-5 rounded-xl border border-[#212734] bg-[#11141c]"
             >
-              <div className="w-8 h-8 rounded-lg bg-emerald-50 dark:bg-emerald-950/60 text-emerald-600 flex items-center justify-center mb-3">
-                <CheckCircle2 className="w-4 h-4" />
+              <div className="w-7 h-7 rounded bg-[#181d28] text-emerald-400 flex items-center justify-center mb-3 font-mono text-xs border border-[#283244]">
+                ✓
               </div>
-              <h3 className="font-bold text-sm text-slate-900 dark:text-white mb-1.5">
+              <h3 className="font-bold text-sm text-white mb-1.5 font-sans">
                 {f.title}
               </h3>
-              <p className="text-xs text-slate-500 dark:text-slate-400 leading-relaxed">
+              <p className="text-xs text-slate-400 leading-relaxed font-sans">
                 {f.desc}
               </p>
             </div>

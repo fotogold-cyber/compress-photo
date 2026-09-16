@@ -1,6 +1,6 @@
 import React from 'react';
 import Link from 'next/link';
-import { ImageIcon, ShieldCheck, Heart, Zap, Cpu } from 'lucide-react';
+import { Aperture, ShieldCheck, Zap, Cpu } from 'lucide-react';
 import { translations, Locale } from '@/lib/i18n/translations';
 import { TOOLS_DATA } from '@/lib/tools-data';
 import { DOCS_DATA } from '@/lib/docs-data';
@@ -13,49 +13,48 @@ export function Footer({ locale }: FooterProps) {
   const t = translations[locale];
 
   return (
-    <footer className="mt-24 border-t border-slate-200 dark:border-slate-800/80 bg-slate-50/70 dark:bg-slate-950/60 backdrop-blur-sm text-slate-600 dark:text-slate-400">
+    <footer className="mt-24 border-t border-[#1e2430] bg-[#090b0e] text-slate-400 font-sans">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-14">
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-10">
-          {/* Brand & Mission column */}
+          {/* Brand & Technical spec */}
           <div className="lg:col-span-2 space-y-4">
-            <Link href={`/${locale}`} className="flex items-center gap-2.5">
-              <div className="w-8 h-8 rounded-lg bg-blue-600 flex items-center justify-center text-white shadow-sm">
-                <ImageIcon className="w-4 h-4" />
+            <Link href={`/${locale}`} className="flex items-center gap-2.5 group">
+              <div className="w-8 h-8 rounded bg-[#141822] border border-[#262f3f] flex items-center justify-center text-[#ff5500]">
+                <Aperture className="w-4 h-4 group-hover:rotate-45 transition-transform" />
               </div>
-              <span className="font-bold text-base text-slate-900 dark:text-white tracking-tight">
-                {t.siteName}
+              <span className="font-extrabold text-sm sm:text-base text-white tracking-tight uppercase">
+                {locale === 'ru' ? 'СжатьФото.онлайн' : 'CompressPhoto.online'}
               </span>
             </Link>
-            <p className="text-sm text-slate-600 dark:text-slate-400 max-w-sm leading-relaxed">
+
+            <p className="text-xs sm:text-sm text-slate-400 max-w-sm leading-relaxed font-sans">
               {t.footer.privacyNote}
             </p>
-            <div className="flex flex-wrap items-center gap-3 pt-2 text-xs">
-              <span className="inline-flex items-center gap-1 text-emerald-600 dark:text-emerald-400 bg-emerald-50 dark:bg-emerald-950/50 px-2.5 py-1 rounded-md border border-emerald-200 dark:border-emerald-900/50 font-medium">
-                <ShieldCheck className="w-3.5 h-3.5" />
-                Zero Server Uploads
+
+            <div className="flex flex-wrap items-center gap-2 pt-2 text-[10px] font-mono text-slate-400">
+              <span className="inline-flex items-center gap-1 text-emerald-400 bg-emerald-950/40 px-2 py-0.5 rounded border border-emerald-800/60">
+                <ShieldCheck className="w-3 h-3" />
+                ZERO_SERVER_TRANSMIT
               </span>
-              <span className="inline-flex items-center gap-1 text-blue-600 dark:text-blue-400 bg-blue-50 dark:bg-blue-950/50 px-2.5 py-1 rounded-md border border-blue-200 dark:border-blue-900/50 font-medium">
-                <Cpu className="w-3.5 h-3.5" />
-                Canvas API
-              </span>
-              <span className="inline-flex items-center gap-1 text-amber-600 dark:text-amber-400 bg-amber-50 dark:bg-amber-950/50 px-2.5 py-1 rounded-md border border-amber-200 dark:border-amber-900/50 font-medium">
-                <Zap className="w-3.5 h-3.5" />
-                No Limits
+              <span className="inline-flex items-center gap-1 text-slate-300 bg-[#161a24] px-2 py-0.5 rounded border border-[#283142]">
+                <Cpu className="w-3 h-3 text-[#ff5500]" />
+                CANVAS_2D_V2
               </span>
             </div>
           </div>
 
-          {/* Tools column */}
+          {/* Tools matrix */}
           <div>
-            <h3 className="text-xs font-bold uppercase tracking-wider text-slate-900 dark:text-slate-200 mb-3">
-              {t.footer.toolsHeading}
+            <h3 className="text-xs font-mono font-bold uppercase tracking-wider text-slate-200 mb-4 flex items-center gap-1.5">
+              <span className="text-[#ff5500]">◈</span>
+              <span>{t.footer.toolsHeading}</span>
             </h3>
-            <ul className="space-y-2 text-sm">
+            <ul className="space-y-2 text-xs font-mono">
               {TOOLS_DATA.map((tool) => (
                 <li key={tool.slug[locale]}>
                   <Link
                     href={`/${locale}/${tool.slug[locale]}`}
-                    className="hover:text-blue-600 dark:hover:text-blue-400 transition-colors"
+                    className="hover:text-[#ff5500] text-slate-400 transition-colors block truncate"
                   >
                     {tool.title[locale]}
                   </Link>
@@ -64,17 +63,18 @@ export function Footer({ locale }: FooterProps) {
             </ul>
           </div>
 
-          {/* Docs column */}
+          {/* Docs / Knowledge base */}
           <div className="lg:col-span-2">
-            <h3 className="text-xs font-bold uppercase tracking-wider text-slate-900 dark:text-slate-200 mb-3">
-              {t.footer.docsHeading}
+            <h3 className="text-xs font-mono font-bold uppercase tracking-wider text-slate-200 mb-4 flex items-center gap-1.5">
+              <span className="text-[#ff5500]">◈</span>
+              <span>{t.footer.docsHeading}</span>
             </h3>
-            <ul className="space-y-2.5 text-sm">
+            <ul className="space-y-2 text-xs font-mono">
               {DOCS_DATA.map((doc) => (
                 <li key={doc.slug}>
                   <Link
                     href={`/${locale}/docs/${doc.slug}`}
-                    className="hover:text-blue-600 dark:hover:text-blue-400 transition-colors line-clamp-1"
+                    className="hover:text-[#ff5500] text-slate-400 transition-colors line-clamp-1"
                     title={doc.title[locale]}
                   >
                     {doc.title[locale]}
@@ -86,25 +86,23 @@ export function Footer({ locale }: FooterProps) {
         </div>
 
         {/* Bottom bar */}
-        <div className="mt-12 pt-6 border-t border-slate-200 dark:border-slate-800/80 flex flex-col sm:flex-row items-center justify-between gap-4 text-xs text-slate-500">
+        <div className="mt-12 pt-6 border-t border-[#181d26] flex flex-col sm:flex-row items-center justify-between gap-4 text-xs font-mono text-slate-500">
           <div>
             &copy; {new Date().getFullYear()} {t.siteName}. {t.footer.copyright}
           </div>
           <div className="flex items-center gap-4">
-            <Link href={`/${locale}/docs`} className="hover:text-blue-600 transition-colors">
+            <Link href={`/${locale}/docs`} className="hover:text-[#ff5500] transition-colors">
               {t.nav.docs}
             </Link>
             <span>•</span>
             <Link
               href={`/${locale === 'ru' ? 'en' : 'ru'}`}
-              className="hover:text-blue-600 transition-colors font-medium"
+              className="hover:text-[#ff5500] transition-colors text-slate-400"
             >
-              {locale === 'ru' ? 'English version' : 'Русская версия'}
+              {locale === 'ru' ? 'EN_VERSION' : 'RU_VERSION'}
             </Link>
             <span>•</span>
-            <span className="flex items-center gap-1">
-              Built with Next.js & Vercel
-            </span>
+            <span className="text-slate-600">VERCEL_EDGE_READY</span>
           </div>
         </div>
       </div>

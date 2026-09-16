@@ -1,7 +1,7 @@
 'use client';
 
 import React, { useRef, useState, useEffect } from 'react';
-import { UploadCloud, Image as ImageIcon, Sparkles, Clipboard } from 'lucide-react';
+import { UploadCloud, Camera, Sparkles, Clipboard, Focus, Maximize } from 'lucide-react';
 import { translations, Locale } from '@/lib/i18n/translations';
 
 interface DropzoneProps {
@@ -25,9 +25,7 @@ export function Dropzone({ locale, onFilesSelected, disabled }: DropzoneProps) {
       for (const item of items) {
         if (item.type.startsWith('image/')) {
           const file = item.getAsFile();
-          if (file) {
-            files.push(file);
-          }
+          if (file) files.push(file);
         }
       }
 
@@ -70,7 +68,7 @@ export function Dropzone({ locale, onFilesSelected, disabled }: DropzoneProps) {
     if (e.target.files && e.target.files.length > 0) {
       const files = Array.from(e.target.files);
       onFilesSelected(files);
-      e.target.value = ''; // reset to allow re-uploading same file
+      e.target.value = '';
     }
   };
 
@@ -80,12 +78,13 @@ export function Dropzone({ locale, onFilesSelected, disabled }: DropzoneProps) {
       onDragLeave={handleDragLeave}
       onDrop={handleDrop}
       onClick={() => inputRef.current?.click()}
-      className={`relative group cursor-pointer rounded-2xl border-2 border-dashed p-8 sm:p-12 text-center transition-all duration-200 ${
+      className={`relative group cursor-pointer rounded-2xl border p-8 sm:p-14 text-center transition-all duration-300 overflow-hidden ${
         isDragOver
-          ? 'border-blue-500 bg-blue-50/60 dark:bg-blue-950/30 scale-[1.01]'
-          : 'border-slate-300 dark:border-slate-700 bg-white/70 dark:bg-slate-900/60 hover:border-blue-400 hover:bg-slate-50/80 dark:hover:bg-slate-900/90 shadow-sm hover:shadow-md'
+          ? 'border-[#ff5500] bg-[#ff5500]/5 scale-[1.01] shadow-[0_0_40px_rgba(255,85,0,0.2)]'
+          : 'border-[#262c3a] bg-[#10131a]/90 hover:border-[#384257] hover:bg-[#131722] shadow-2xl'
       }`}
     >
+      {/* Hidden file input */}
       <input
         ref={inputRef}
         type="file"
@@ -96,43 +95,76 @@ export function Dropzone({ locale, onFilesSelected, disabled }: DropzoneProps) {
         disabled={disabled}
       />
 
-      <div className="flex flex-col items-center justify-center max-w-xl mx-auto">
+      {/* Optical Viewfinder Corner Crop Marks */}
+      <div className="pointer-events-none absolute top-3 left-3 w-4 h-4 border-t-2 border-l-2 border-[#ff5500] opacity-80 group-hover:opacity-100 transition-opacity" />
+      <div className="pointer-events-none absolute top-3 right-3 w-4 h-4 border-t-2 border-r-2 border-[#ff5500] opacity-80 group-hover:opacity-100 transition-opacity" />
+      <div className="pointer-events-none absolute bottom-3 left-3 w-4 h-4 border-b-2 border-l-2 border-[#ff5500] opacity-80 group-hover:opacity-100 transition-opacity" />
+      <div className="pointer-events-none absolute bottom-3 right-3 w-4 h-4 border-b-2 border-r-2 border-[#ff5500] opacity-80 group-hover:opacity-100 transition-opacity" />
+
+      {/* Center crosshair watermark */}
+      <div className="pointer-events-none absolute inset-0 flex items-center justify-center opacity-5 group-hover:opacity-10 transition-opacity">
+        <Focus className="w-48 h-48 text-white stroke-[1]" />
+      </div>
+
+      <div className="relative z-10 flex flex-col items-center justify-center max-w-xl mx-auto">
+        {/* Optical Sensor Icon */}
         <div
-          className={`w-16 h-16 rounded-2xl flex items-center justify-center mb-4 transition-all duration-200 ${
+          className={`w-16 h-16 rounded-xl flex items-center justify-center mb-5 border transition-all duration-300 ${
             isDragOver
-              ? 'bg-blue-600 text-white scale-110 shadow-lg shadow-blue-500/30'
-              : 'bg-blue-50 dark:bg-slate-800 text-blue-600 dark:text-blue-400 group-hover:scale-105 group-hover:bg-blue-600 group-hover:text-white'
+              ? 'bg-[#ff5500] border-[#ff5500] text-white scale-110 shadow-lg shadow-[#ff5500]/50'
+              : 'bg-[#181d28] border-[#2c3547] text-[#ff5500] group-hover:border-[#ff5500] group-hover:scale-105 shadow-inner'
           }`}
         >
-          <UploadCloud className="w-8 h-8" />
+          <Camera className="w-8 h-8" />
         </div>
 
-        <h3 className="text-xl sm:text-2xl font-bold text-slate-900 dark:text-white tracking-tight mb-2">
+        {/* Viewfinder Telemetry Header */}
+        <div className="flex items-center gap-2 mb-2">
+          <span className="w-1.5 h-1.5 rounded-full bg-[#ff5500] animate-ping" />
+          <span className="text-[11px] font-mono tracking-widest text-[#ff5500] uppercase font-bold">
+            {isDragOver
+              ? '● EXPOSURE READY // RELEASE TO PROCESS'
+              : '● OPTICAL BUFFER READY // DRAG & DROP'}
+          </span>
+        </div>
+
+        <h3 className="text-xl sm:text-3xl font-extrabold text-white tracking-tight mb-2.5 font-sans">
           {isDragOver ? t.dropzone.dropActive : t.dropzone.title}
         </h3>
 
-        <p className="text-sm text-slate-500 dark:text-slate-400 mb-6 leading-relaxed">
+        <p className="text-xs sm:text-sm text-slate-400 mb-7 leading-relaxed max-w-md font-sans">
           {t.dropzone.subtitle}
         </p>
 
-        <div className="flex flex-wrap items-center justify-center gap-3">
+        {/* Tactile Shutter Button */}
+        <div className="flex flex-wrap items-center justify-center gap-4">
           <button
             type="button"
-            className="px-6 py-3 rounded-xl bg-blue-600 hover:bg-blue-700 text-white font-semibold text-sm shadow-md shadow-blue-600/20 hover:shadow-lg transition-all"
+            className="px-7 py-3.5 rounded-xl bg-[#ff5500] hover:bg-[#e04b00] active:scale-95 text-white font-mono font-bold text-xs uppercase tracking-wider shadow-lg shadow-[#ff5500]/30 transition-all border border-[#ff7733] flex items-center gap-2"
           >
-            {t.dropzone.button}
+            <Camera className="w-4 h-4" />
+            <span>{t.dropzone.button}</span>
           </button>
         </div>
 
-        <div className="mt-6 flex flex-wrap items-center justify-center gap-2 text-xs text-slate-400">
-          <span className="px-2 py-0.5 rounded bg-slate-100 dark:bg-slate-800 font-mono">JPG</span>
-          <span className="px-2 py-0.5 rounded bg-slate-100 dark:bg-slate-800 font-mono">PNG</span>
-          <span className="px-2 py-0.5 rounded bg-slate-100 dark:bg-slate-800 font-mono">WEBP</span>
-          <span className="px-2 py-0.5 rounded bg-slate-100 dark:bg-slate-800 font-mono">AVIF</span>
-          <span className="mx-1">•</span>
-          <span className="flex items-center gap-1 text-slate-500">
-            <Clipboard className="w-3 h-3" />
-            Ctrl + V
+        {/* Format indicators & Clipboard telemetry */}
+        <div className="mt-8 flex flex-wrap items-center justify-center gap-2.5 text-[11px] font-mono text-slate-400">
+          <span className="px-2 py-0.5 rounded bg-[#161a24] border border-[#273042] text-slate-300">
+            JPG
+          </span>
+          <span className="px-2 py-0.5 rounded bg-[#161a24] border border-[#273042] text-slate-300">
+            PNG
+          </span>
+          <span className="px-2 py-0.5 rounded bg-[#161a24] border border-[#273042] text-slate-300">
+            WEBP
+          </span>
+          <span className="px-2 py-0.5 rounded bg-[#161a24] border border-[#273042] text-slate-300">
+            AVIF
+          </span>
+          <span className="text-slate-600">•</span>
+          <span className="flex items-center gap-1 text-slate-400 px-2 py-0.5 rounded bg-[#161a24] border border-[#273042]">
+            <Clipboard className="w-3 h-3 text-[#ff5500]" />
+            CTRL + V PASTE
           </span>
         </div>
       </div>

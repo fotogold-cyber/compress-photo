@@ -18,23 +18,23 @@ export function Breadcrumbs({ items }: BreadcrumbsProps) {
   return (
     <>
       <BreadcrumbJsonLd items={items} />
-      <nav aria-label="Breadcrumb" className="mb-6 flex items-center gap-1.5 text-xs text-slate-500 flex-wrap">
+      <nav aria-label="Breadcrumb" className="mb-6 flex items-center gap-1.5 text-xs font-mono text-slate-500 flex-wrap">
         {items.map((crumb, idx) => {
           const isLast = idx === items.length - 1;
 
           return (
             <React.Fragment key={crumb.url}>
-              {idx > 0 && <ChevronRight className="w-3.5 h-3.5 text-slate-400 shrink-0" />}
+              {idx > 0 && <span className="text-slate-600">/</span>}
               {isLast ? (
-                <span className="font-semibold text-slate-800 dark:text-slate-200 truncate max-w-xs">
+                <span className="font-bold text-slate-300 truncate max-w-xs uppercase">
                   {crumb.name}
                 </span>
               ) : (
                 <Link
                   href={crumb.url}
-                  className="hover:text-blue-600 dark:hover:text-blue-400 transition-colors flex items-center gap-1"
+                  className="hover:text-[#ff5500] text-slate-500 transition-colors uppercase flex items-center gap-1"
                 >
-                  {idx === 0 && <Home className="w-3 h-3" />}
+                  {idx === 0 && <span className="text-[#ff5500]">~</span>}
                   <span>{crumb.name}</span>
                 </Link>
               )}
