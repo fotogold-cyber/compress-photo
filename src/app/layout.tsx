@@ -51,6 +51,9 @@ export const metadata: Metadata = {
       'max-image-preview': 'large',
       'max-snippet': -1,
     },
+  verification: {
+    google: 'SO0ttZo-ZiY3zeO_RnJXTwaAA9ncZsNq-pGbnvxiAcA',
+    yandex: '5a30b1b7dc327cf1',
   },
 };
 
@@ -64,6 +67,8 @@ export default function RootLayout({
       <head>
         <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=5" />
         <meta name="theme-color" content="#0a0c10" />
+        <meta name="yandex-verification" content="5a30b1b7dc327cf1" />
+        <meta name="google-site-verification" content="SO0ttZo-ZiY3zeO_RnJXTwaAA9ncZsNq-pGbnvxiAcA" />
       </head>
       <body className="antialiased bg-[#0a0c10] text-[#e2e8f0] min-h-screen flex flex-col font-sans selection:bg-[#ff5500] selection:text-white">
         {children}
