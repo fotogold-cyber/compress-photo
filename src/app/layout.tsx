@@ -1,6 +1,6 @@
 import type { Metadata } from 'next';
-import Script from 'next/script';
 import { Manrope, JetBrains_Mono } from 'next/font/google';
+import { YandexMetrika } from '@/components/seo/YandexMetrika';
 import './globals.css';
 
 const sansFont = Manrope({
@@ -74,13 +74,7 @@ export default function RootLayout({
       </head>
       <body className="antialiased bg-[#0a0c10] text-[#e2e8f0] min-h-screen flex flex-col font-sans selection:bg-[#ff5500] selection:text-white">
         {children}
-        <Script
-          id="stat-cloud-tracker"
-          strategy="afterInteractive"
-          dangerouslySetInnerHTML={{
-            __html: "fetch('https://v0-stat-cloud.vercel.app/api/track', { mode: 'no-cors' }).catch(() => {});",
-          }}
-        />
+        <YandexMetrika />
       </body>
     </html>
   );
